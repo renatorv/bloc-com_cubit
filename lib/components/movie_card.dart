@@ -12,37 +12,35 @@ class MovieCard extends StatelessWidget {
     return Column(
       children: [
         Card(
-            clipBehavior: Clip.hardEdge,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 200),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MovieScreen(movie: movie),
+          clipBehavior: Clip.hardEdge,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MovieScreen(movie: movie),
+                ),
+              );
+            },
+            child: SizedBox(
+              height: 200,
+              width: 160,
+              child: movie.imageURI != null
+                  ? Ink(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(image: NetworkImage(movie.imageURI!), fit: BoxFit.cover),
                       ),
-                    );
-                  },
-                  child: movie.imageURI != null
-                      ? Ink(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage(movie.imageURI!),
-                                fit: BoxFit.cover),
-                          ),
-                        )
-                      : Ink(
-                          child: const Center(
-                            child: Icon(Icons.error),
-                          ),
-                        )),
-            )),
-        Text(
-          movie.name,
-          style: Theme.of(context).textTheme.displaySmall,
-        )
+                    )
+                  : Ink(
+                      child: const Center(
+                        child: Icon(Icons.error),
+                      ),
+                    ),
+            ),
+          ),
+        ),
+        Text(movie.name, style: Theme.of(context).textTheme.displaySmall)
       ],
     );
   }
